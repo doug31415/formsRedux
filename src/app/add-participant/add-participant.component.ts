@@ -1,42 +1,54 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { AppState } from '../core/AppState';
-import { Store } from 'redux';
+import { Component, OnInit } from '@angular/core';
 import { ParticipantActions } from '../core/ParticipantActions';
-import { ReviewState, YesNo } from '../enums/Enums';
+import { ReviewState } from '../enums/Enums';
 import { Participant } from '../participant/participant';
+import { ParticipantStore } from '../core/ParticipantStore';
+import { Router } from '@angular/router';
 
 @Component( {
   selector   : 'app-add-participant',
   templateUrl: './add-participant.component.html',
-  styleUrls  : [ './add-participant.component.css' ]
+  styleUrls  : [ './add-participant.component.scss' ]
 } )
 export class AddParticipantComponent implements OnInit {
 
-  @Input()
-  store: Store<AppState>;
+  store: ParticipantStore;
+  router: Router;
 
   yesNoOpts = [
-    { label: 'Yes', value: YesNo.Yes },
-    { label: 'No', value: YesNo.No }
+    { label: 'Yes', value: true },
+    { label: 'No', value: false }
   ];
 
   reviewOptions = [
-    { label: 'Not Accepted', value: ReviewState.NotAccepted },
-    { label: 'Not Reviewed', value: ReviewState.NotReviewed },
-    { label: 'Accepted', value: ReviewState.Accepted }
+    { label: 'Not Accepted', value: 0 },
+    { label: 'Not Reviewed', value: 1 },
+    { label: 'Accepted', value: 2 }
   ];
 
   selectedParticipant: Participant;
 
-  constructor() {
+  constructor( store: ParticipantStore, router: Router ) {
+    this.store               = store;
+    this.selectedParticipant = this.store.getState().selectedParticipant;
+    this.router              = router;
+    console.log( 'addParticipant constructor', this.selectedParticipant );
   }
 
-  goToPage() {
-    this.store.dispatch( ParticipantActions.goToPage( 0 ) );
+  goToPage(): void {
+    console.log( 'addParticipant goToPage' );
+    this.router.navigate( [ '/display' ] );
   }
 
-  onAdd( participant ) {
-    this.store.dispatch( ParticipantActions.addParticipant( participant ) );
+  onUpdate(): void {
+    this.store.dispatch( ParticipantActions.updateParticipant( this.selectedParticipant ) );
+    this.goToPage();
+  }
+
+  onAdd(): void {
+    console.log( 'addParticipant onAdd' );
+    this.store.dispatch( ParticipantActions.addParticipant( this.selectedParticipant ) );
+    this.goToPage();
   }
 
   ngOnInit() {

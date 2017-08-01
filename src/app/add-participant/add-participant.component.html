@@ -1,26 +1,40 @@
-<div class="header-block">
+<div class="header-block flex nowrap center justify">
   <h1>
     Add Participant
   </h1>
 
-  <button (click)="goToPage()">All Participants</button>
+  <nav>
+    <a routerLink="/display"
+       class="button primary"
+       routerLinkActive="active">Participant List</a>
+  </nav>
 </div>
 
-<form>
+<form #participantForm="ngForm">
 
   <div class="section">
-    <label>Name
-      <input>
+    <label for="name">Name
+      <input id="name"
+             name="name"
+             [(ngModel)]="selectedParticipant.name"
+             required>
     </label>
 
-    <label>Age
-      <input type="number">
+    <label for="age">Age
+      <input type="number"
+             id="age"
+             name="age"
+             [(ngModel)]="selectedParticipant.age"
+             required>
     </label>
 
-    <label>Has Siblings
-      <select>
+    <label for="hasSiblings">Has Siblings
+      <select id="hasSiblings"
+              name="hasSiblings"
+              [(ngModel)]="selectedParticipant.hasSiblings"
+              required>
         <option *ngFor="let opt of yesNoOpts"
-                value="opt.value">{{opt.label}}
+                [value]="opt.value">{{opt.label}}
         </option>
       </select>
     </label>
@@ -28,28 +42,38 @@
 
   <div class="section">
 
-    <label>Known Environmental Exposures
+    <label for="environmentalExposures">Known Environmental Exposures
       <input type="text"
+             id="environmentalExposures"
              name="environmentalExposures"
-             ngModel
-             required>
+             [(ngModel)]="selectedParticipant.environmentalExposures">
     </label>
 
-    <label>Known Genetic Mutations
-      <input type="text" [(ngModel)]="selectedParticipant.geneticMutations">
+    <label for="geneticMutations">Known Genetic Mutations
+      <input type="text"
+             id="geneticMutations"
+             name="geneticMutations"
+             [(ngModel)]="selectedParticipant.geneticMutations">
     </label>
   </div>
 
-  <div class="section">
-    <label>Review State
-      <select [ngModel]="selectedParticipant.reviewState">
+  <div class="section flex start">
+    <label for="reviewState">Review State
+      <select id="reviewState"
+              name="reviewState"
+              [(ngModel)]="selectedParticipant.reviewState">
         <option *ngFor="let opt of reviewOptions"
-                (change)="onUpdate(participant, opt.value)"
-                value="opt.value">{{opt.label}}
+                [value]="opt.value">{{opt.label}}
         </option>
       </select></label>
   </div>
 
-  <button (click)="onAdd()">Add Participant</button>
+  <button class="primary button"
+          *ngIf="!store.getState().editMode"
+          (click)="onAdd()">Add Participant</button>
+
+  <button class="primary button"
+          *ngIf="store.getState().editMode"
+          (click)="onUpdate()">Update Participant</button>
 
 </form>

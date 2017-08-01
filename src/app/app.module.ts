@@ -5,8 +5,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { DisplayParticipantComponent } from './display-participant/display-participant.component';
 import { AddParticipantComponent } from './add-participant/add-participant.component';
+import { ParticipantStore } from './core/ParticipantStore';
+import { FormsModule } from '@angular/forms';
 
 const appRoutes: Routes = [
+  { path: '', redirectTo: '/display', pathMatch: 'full' },
   { path: 'display', component: DisplayParticipantComponent },
   { path: 'add', component: AddParticipantComponent }
 ];
@@ -17,14 +20,16 @@ const appRoutes: Routes = [
     DisplayParticipantComponent,
     AddParticipantComponent
   ],
-  imports: [
+  imports     : [
     BrowserModule,
+    FormsModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true }
     )
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers   : [ ParticipantStore ],
+  bootstrap   : [ AppComponent ]
 })
+
 export class AppModule { }

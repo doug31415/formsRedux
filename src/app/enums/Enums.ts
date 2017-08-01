@@ -1,10 +1,5 @@
 export const enum ReviewState {
-  NotReviewed,
-  Accepted,
-  NotAccepted
-}
-
-export const enum YesNo {
-  Yes,
-  No
+  NotReviewed = 0,
+  Accepted    = 1,
+  NotAccepted = 2
 }

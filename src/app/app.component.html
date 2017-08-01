@@ -1,22 +1,6 @@
-<!--The content below is only a placeholder and can be replaced.-->
 <div>
 
-
-  <!--<nav>-->
-  <!--<a routerLink="/add"-->
-  <!--routerLinkActive="active">Add Participant</a>-->
-
-  <!--<a routerLink="/display"-->
-  <!--routerLinkActive="active">Participants</a>-->
-  <!--</nav>-->
-
-  <!--<router-outlet></router-outlet>-->
-
-  <app-display-participant *ngIf="store.getState().currentPage === 0"
-                           [store]="store"></app-display-participant>
-
-  <app-add-participant *ngIf="store.getState().currentPage === 1"
-                       [store]="store"></app-add-participant>
+  <router-outlet></router-outlet>
 
 </div>
 

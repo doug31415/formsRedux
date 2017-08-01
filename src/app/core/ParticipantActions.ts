@@ -12,6 +12,10 @@ export interface UpdateParticipantAction extends Action {
   participant: Participant;
 }
 
+export interface EditParticipantAction extends Action {
+  participant: Participant;
+}
+
 export interface DeleteParticipantAction extends Action {
   index: number;
 }
@@ -25,14 +29,14 @@ export interface GoToPageAction extends Action {
 export class ParticipantActions {
   static addParticipant( participant: Participant ): AddParticipantAction {
     return {
-      type   : ACTIONS.addParticipant,
+      type       : ACTIONS.addParticipant,
       participant: participant
     };
   }
 
   static updateParticipant( participant: Participant ): UpdateParticipantAction {
     return {
-      type   : ACTIONS.updateParticipant,
+      type       : ACTIONS.updateParticipant,
       participant: participant
     };
   }
@@ -44,11 +48,16 @@ export class ParticipantActions {
     };
   }
 
-
+  static editParticipant( participant: Participant ): EditParticipantAction {
+    return {
+      type       : ACTIONS.editParticipant,
+      participant: participant
+    };
+  }
 
   static goToPage( page: number ): GoToPageAction {
     return {
-      type : ACTIONS.goToPage,
+      type: ACTIONS.goToPage,
       page: page
     };
   }
